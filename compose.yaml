@@ -1,10 +1,41 @@
+version: "3.8"
 services:
-  mariadb:
-    image: 'mariadb:latest'
+  mysql-db:
+    image: "mysql:latest"
+    container_name: mysql-container
     environment:
-      - 'MARIADB_DATABASE=mydatabase'
-      - 'MARIADB_PASSWORD=secret'
-      - 'MARIADB_ROOT_PASSWORD=verysecret'
-      - 'MARIADB_USER=myuser'
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_USER=${MYSQL_USERNAME}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
-      - '3306'
+      - "3306:3306"
+    env_file:
+      - .env
+    networks:
+      - japi
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: japi-container
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+    env_file:
+      - .env
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    networks:
+      - japi
+
+networks:
+  japi:
+    name: japi
