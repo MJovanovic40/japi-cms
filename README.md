@@ -1,1 +1,3 @@
-# japi-cms
+# japi-cms 
+...
+A headless CMS for Java
