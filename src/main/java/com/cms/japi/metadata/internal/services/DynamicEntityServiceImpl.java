@@ -15,13 +15,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@LogService
 public class DynamicEntityServiceImpl implements DynamicEntityService {
 
     private final DynamicEntityRepository dynamicEntityRepository;
     private final Mapper mapper;
 
     @Override
-    @LogService
     public DynamicEntityDto createDynamicEntity(String dynamicEntityName) {
         DynamicEntity newDynamicEntity = new DynamicEntity();
         newDynamicEntity.setName(dynamicEntityName);
@@ -30,7 +30,6 @@ public class DynamicEntityServiceImpl implements DynamicEntityService {
     }
 
     @Override
-    @LogService
     public List<DynamicEntityDto> getAll() {
         return dynamicEntityRepository.findAll()
                 .stream()
@@ -39,21 +38,18 @@ public class DynamicEntityServiceImpl implements DynamicEntityService {
     }
 
     @Override
-    @LogService
     public DynamicEntityDto getDynamicEntity(Integer dynamicEntityId) {
         return mapper.map(dynamicEntityRepository.findById(dynamicEntityId)
                 .orElseThrow(DynamicEntityNotFoundException::new), DynamicEntityDto.class);
     }
 
     @Override
-    @LogService
     public void updateDynamicEntityData(Integer dynamicEntityId, String name, String dynamicEntityJsonString) {
         int rowsAffected = dynamicEntityRepository.updateDynamicEntityById(dynamicEntityId, name, dynamicEntityJsonString);
         if (rowsAffected < 1) throw new DynamicEntityNotFoundException();
     }
 
     @Override
-    @LogService
     public void deleteDynamicEntity(Integer dynamicEntityId) {
         int rowsAffected = dynamicEntityRepository.deleteDynamicEntityById(dynamicEntityId);
         if (rowsAffected < 1) throw new DynamicEntityNotFoundException();
