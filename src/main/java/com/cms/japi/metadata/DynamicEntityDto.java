@@ -1,4 +1,4 @@
-package com.cms.japi.metadata.internal.dto;
+package com.cms.japi.metadata;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

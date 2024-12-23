@@ -3,7 +3,7 @@ package com.cms.japi.metadata.internal.services;
 import com.cms.japi.logging.LogService;
 import com.cms.japi.metadata.DynamicEntityService;
 import com.cms.japi.metadata.internal.constants.DynamicEntityConstants;
-import com.cms.japi.metadata.internal.dto.DynamicEntityDto;
+import com.cms.japi.metadata.DynamicEntityDto;
 import com.cms.japi.metadata.internal.entities.DynamicEntity;
 import com.cms.japi.metadata.internal.exceptions.DynamicEntityNotFoundException;
 import com.cms.japi.metadata.internal.repositories.DynamicEntityRepository;
@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class DynamicEntityServiceImpl implements DynamicEntityService {
 
     private final DynamicEntityRepository dynamicEntityRepository;

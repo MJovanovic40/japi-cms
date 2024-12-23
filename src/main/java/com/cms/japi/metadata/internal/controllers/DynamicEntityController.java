@@ -1,6 +1,6 @@
 package com.cms.japi.metadata.internal.controllers;
 
-import com.cms.japi.metadata.internal.dto.DynamicEntityDto;
+import com.cms.japi.metadata.DynamicEntityDto;
 import com.cms.japi.metadata.internal.requests.CreateDynamicEntityRequest;
 import com.cms.japi.metadata.internal.requests.UpdateDynamicEntityRequest;
 import com.cms.japi.metadata.internal.services.DynamicEntityServiceImpl;
