@@ -1,8 +1,9 @@
 package com.cms.japi.metadata.internal.constants;
 
-public class DynamicEntityConstants {
+import lombok.experimental.UtilityClass;
 
-    private DynamicEntityConstants() {}
+@UtilityClass
+public class DynamicEntityConstants {
 
     public static final String EMPTY_DATA = "{}";
 }
