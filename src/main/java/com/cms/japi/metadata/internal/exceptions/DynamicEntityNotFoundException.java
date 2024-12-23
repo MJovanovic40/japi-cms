@@ -1,4 +1,4 @@
-package com.cms.japi.metadata.internal.exception;
+package com.cms.japi.metadata.internal.exceptions;
 
 
 public class DynamicEntityNotFoundException extends RuntimeException {

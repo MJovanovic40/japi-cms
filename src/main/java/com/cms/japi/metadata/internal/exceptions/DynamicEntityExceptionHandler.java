@@ -1,4 +1,4 @@
-package com.cms.japi.metadata.internal.exception;
+package com.cms.japi.metadata.internal.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

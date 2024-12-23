@@ -1,6 +1,6 @@
-package com.cms.japi.metadata.internal.repository;
+package com.cms.japi.metadata.internal.repositories;
 
-import com.cms.japi.metadata.internal.entity.DynamicEntity;
+import com.cms.japi.metadata.internal.entities.DynamicEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

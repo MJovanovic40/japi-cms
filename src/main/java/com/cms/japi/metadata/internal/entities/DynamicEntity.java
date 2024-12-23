@@ -1,4 +1,4 @@
-package com.cms.japi.metadata.internal.entity;
+package com.cms.japi.metadata.internal.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "dynamic_entity")
+@Table (name = "dynamic_entities")
 public class DynamicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,9 +1,9 @@
-package com.cms.japi.metadata.internal.controller;
+package com.cms.japi.metadata.internal.controllers;
 
-import com.cms.japi.metadata.internal.entity.DynamicEntity;
+import com.cms.japi.metadata.internal.dto.DynamicEntityDto;
 import com.cms.japi.metadata.internal.requests.CreateDynamicEntityRequest;
 import com.cms.japi.metadata.internal.requests.UpdateDynamicEntityRequest;
-import com.cms.japi.metadata.internal.service.DynamicEntityServiceImpl;
+import com.cms.japi.metadata.internal.services.DynamicEntityServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +19,18 @@ public class DynamicEntityController {
     private final DynamicEntityServiceImpl dynamicEntityService;
 
     @PostMapping
-    public ResponseEntity<DynamicEntity> createDynamicEntity(@RequestBody @Valid CreateDynamicEntityRequest body) {
+    public ResponseEntity<DynamicEntityDto> createDynamicEntity(@RequestBody @Valid CreateDynamicEntityRequest body) {
         return ResponseEntity.ok(dynamicEntityService.createDynamicEntity(body.getName()));
     }
 
     @GetMapping
-    public ResponseEntity<List<DynamicEntity>> getAllDynamicEntities() {
+    public ResponseEntity<List<DynamicEntityDto>> getAllDynamicEntities() {
         return ResponseEntity.ok(dynamicEntityService.getAll());
     }
 
     @GetMapping(path = "/{dynamicEntityId}")
-    public ResponseEntity<DynamicEntity> getDynamicEntityData(@PathVariable Integer dynamicEntityId) {
-        DynamicEntity dynamicEntity = dynamicEntityService.getDynamicEntity(dynamicEntityId);
-        return ResponseEntity.ok(dynamicEntity);
+    public ResponseEntity<DynamicEntityDto> getDynamicEntityData(@PathVariable Integer dynamicEntityId) {
+        return ResponseEntity.ok(dynamicEntityService.getDynamicEntity(dynamicEntityId));
     }
 
     @PutMapping(path = "/{dynamicEntityId}")

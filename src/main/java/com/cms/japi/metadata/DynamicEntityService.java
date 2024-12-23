@@ -1,16 +1,16 @@
 package com.cms.japi.metadata;
 
-import com.cms.japi.metadata.internal.entity.DynamicEntity;
+import com.cms.japi.metadata.internal.dto.DynamicEntityDto;
 
 import java.util.List;
 
 public interface DynamicEntityService {
 
-    DynamicEntity createDynamicEntity(String dynamicEntityName);
+    DynamicEntityDto createDynamicEntity(String dynamicEntityName);
 
-    List<DynamicEntity> getAll();
+    List<DynamicEntityDto> getAll();
 
-    DynamicEntity getDynamicEntity(Integer dynamicEntityId);
+    DynamicEntityDto getDynamicEntity(Integer dynamicEntityId);
 
     void updateDynamicEntityData(Integer dynamicEntityId, String name, String dynamicEntityJsonString);
 
