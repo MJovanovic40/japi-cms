@@ -11,8 +11,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LoggingAspect {
 
-    @Around("@annotation(com.cms.japi.logging.LogService)")
+    @Around("within(@com.cms.japi.logging.LogService *) && !@annotation(com.cms.japi.logging.LogService)")
     public Object logServiceExecution(ProceedingJoinPoint joinPoint) throws Throwable {
+        return performLogging(joinPoint);
+    }
+
+    @Around("@annotation(com.cms.japi.logging.LogService)")
+    public Object logAnnotatedMethod(ProceedingJoinPoint joinPoint) throws Throwable {
+        return performLogging(joinPoint);
+    }
+
+    private Object performLogging(ProceedingJoinPoint joinPoint) throws Throwable {
         String serviceName = joinPoint.getSignature().toShortString();
         Object[] callArgs = joinPoint.getArgs();
 
