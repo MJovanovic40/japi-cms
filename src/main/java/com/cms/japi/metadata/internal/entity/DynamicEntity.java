@@ -1,7 +1,6 @@
 package com.cms.japi.metadata.internal.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "aaa")
-public class Schema {
+@Table (name = "dynamic_entity")
+public class DynamicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

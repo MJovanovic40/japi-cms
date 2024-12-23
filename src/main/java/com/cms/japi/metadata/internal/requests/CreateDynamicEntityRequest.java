@@ -10,11 +10,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @RequiredArgsConstructor
-public class CreateSchemaRequest {
-
+public class CreateDynamicEntityRequest {
     @NotNull
     @NotEmpty
     private final String name;
-
-
 }
