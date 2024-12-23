@@ -14,15 +14,21 @@ services:
       - .env
     networks:
       - japi
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: japi-container
     ports:
-      - "8081:8081"
+      - "8080:8080"
+
     depends_on:
-      - mysql-db
+      mysql-db:
+        condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/${MYSQL_DATABASE}
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USERNAME}

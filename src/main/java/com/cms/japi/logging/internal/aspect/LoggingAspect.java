@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
     @Around("@annotation(com.cms.japi.logging.LogService)")
-    public Object logServiceExcecution(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logServiceExecution(ProceedingJoinPoint joinPoint) throws Throwable {
         String serviceName = joinPoint.getSignature().toShortString();
         Object[] callArgs = joinPoint.getArgs();
 
