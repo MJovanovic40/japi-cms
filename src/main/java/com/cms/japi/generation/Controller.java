@@ -14,6 +14,6 @@ public class Controller {
 
     @GetMapping("/test")
     public String test() {
-        return migrationBuilder.dropColumn("event_publication", "id");
+        return migrationBuilder.dropColumn("users", "age");
     }
 }
