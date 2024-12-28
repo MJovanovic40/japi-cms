@@ -28,7 +28,7 @@ public class MigrationBuilder {
         if (!checkIfTableExists(table)) throw new TableDoesNotExistsException(table);
         if (!checkIfColumnExists(column, table)) throw new ColumnDoesNotExistsException(column);
         Query query = alterTable(table).dropColumn(column);
-        sqlScriptGenerator.generateSqlScript(query.getSQL());
+        sqlScriptGenerator.generateSqlScript(query.getSQL(), "drop_column");
         return query.getSQL();
     }
 

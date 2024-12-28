@@ -1,12 +1,10 @@
 package com.cms.japi.generation.internal.migrations;
 
+import com.cms.japi.logging.LogService;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,14 +13,22 @@ public class SqlScriptGenerator {
 
     private static final Pattern VERSION_PATTERN = Pattern.compile("^V(\\d+)__.*\\.sql$");
 
-    public void generateSqlScript(String query) throws Exception {
-        Path scriptName = resolveScriptName();
+    @LogService
+    public void generateSqlScript(String query, String description) throws Exception {
+        Path migrationPath = resolveMigrationClasspath();
+        Path scriptName = resolveScriptName(description);
+        Path filePath = Path.of(migrationPath.toString(), scriptName.toString());
+        Files.writeString(filePath, query, StandardOpenOption.CREATE);
     }
 
-    private Path resolveScriptName() throws Exception {
-        int migrationVersion = findLastMigrationVersion();
-        System.out.println(migrationVersion);
-        return Path.of("");
+    private Path resolveScriptName(String description) throws Exception {
+        int migrationVersion = findLastMigrationVersion() + 1;
+        String scriptName = "V" +
+                migrationVersion +
+                "__" +
+                description +
+                ".sql";
+        return Path.of(scriptName);
     }
 
     /**
