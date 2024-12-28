@@ -25,9 +25,18 @@ public class SqlScriptGenerator {
         return Path.of("");
     }
 
+    /**
+     * helper function to determine the last migration version from SQL files in the migration directory.
+     * <p>
+     * The function searches for `.sql` files in the `db/migration` directory, extracts version numbers
+     * from their filenames using a predefined pattern, and returns the highest version number found.
+     * If no migration files are found, it returns 0.
+     *
+     * @return int The highest migration version found, or 0 if no valid migration files exist.
+     * @throws Exception if an error occurs while accessing or processing files in the migration directory.
+     */
     private int findLastMigrationVersion() throws Exception {
         Path migrationPath = resolveMigrationClasspath();
-        if (!Files.exists(migrationPath)) throw new IllegalArgumentException("Migration Path does not exists.");
 
         int maxVersion = 0;
         try (DirectoryStream<Path> files = Files.newDirectoryStream(migrationPath, "*.sql")) {
@@ -43,6 +52,14 @@ public class SqlScriptGenerator {
         return maxVersion;
     }
 
+    /**
+     * Helper function that resolves the file system path to the `db/migration` directory containing
+     * `.sql` migration files.
+     *
+     * @return Path The resolved path to the `db/migration` directory.
+     * @throws IllegalStateException if the directory does not exist.
+     * @throws Exception for any unexpected errors while resolving the path.
+     */
     private Path resolveMigrationClasspath() throws Exception {
         try {
             // Try to find the migration folder in the runtime resources directory
