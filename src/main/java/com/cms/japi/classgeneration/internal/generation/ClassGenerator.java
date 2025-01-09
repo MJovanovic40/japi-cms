@@ -1,6 +1,6 @@
 package com.cms.japi.classgeneration.internal.generation;
 
-import com.cms.japi.classgeneration.internal.properties.DynamicClassProperties;
+import com.cms.japi.classgeneration.DynamicClassProperties;
 
 public interface ClassGenerator {
 

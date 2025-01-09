@@ -1,8 +1,8 @@
 package com.cms.japi.classgeneration.internal.generation;
 
 import com.cms.japi.JapiApplication;
-import com.cms.japi.classgeneration.internal.properties.DynamicClassField;
-import com.cms.japi.classgeneration.internal.properties.DynamicClassProperties;
+import com.cms.japi.classgeneration.DynamicClassField;
+import com.cms.japi.classgeneration.DynamicClassProperties;
 import com.cms.japi.classgeneration.internal.utility.JsonUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

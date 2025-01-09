@@ -1,4 +1,4 @@
-package com.cms.japi.classgeneration.internal.properties;
+package com.cms.japi.classgeneration;
 
 import lombok.Data;
 import lombok.ToString;

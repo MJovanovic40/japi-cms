@@ -1,7 +1,7 @@
 package com.cms.japi.classgeneration.internal.utility;
 
 import com.cms.japi.classgeneration.internal.exceptions.JsonMapperException;
-import com.cms.japi.classgeneration.internal.properties.DynamicClassProperties;
+import com.cms.japi.classgeneration.DynamicClassProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
