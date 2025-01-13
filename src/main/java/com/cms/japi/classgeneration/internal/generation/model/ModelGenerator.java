@@ -1,9 +1,10 @@
-package com.cms.japi.classgeneration.internal.generation;
+package com.cms.japi.classgeneration.internal.generation.model;
 
 import com.cms.japi.JapiApplication;
-import com.cms.japi.classgeneration.DynamicClassField;
-import com.cms.japi.classgeneration.DynamicClassProperties;
-import com.cms.japi.classgeneration.internal.utility.JsonUtils;
+import com.cms.japi.commons.dynamicclassproperties.DynamicClassField;
+import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
+import com.cms.japi.classgeneration.internal.generation.ClassGenerator;
+import com.cms.japi.commons.dynamicclassproperties.internal.DynamicClassPropertiesServiceImpl;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,15 +17,15 @@ import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 
 @RequiredArgsConstructor
 public class ModelGenerator implements ClassGenerator {
-    private final JsonUtils jsonUtils;
+    private final DynamicClassPropertiesServiceImpl classPropertiesService;
 
     @Override
     public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
-        var builder = new ByteBuddy().subclass(Object.class)
+        var builder = new ByteBuddy().subclass(GeneratedEntity.class)
                 .annotateType(AnnotationDescription.Builder.ofType(Entity.class).build());
 
         for (DynamicClassField field : dynamicClassProperties.getFields()) {
-            builder = builder.defineField(field.getName(), String.class)
+            builder = builder.defineField(dynamicClassProperties.getName() + "_" + field.getName(), String.class)
                     .annotateField(AnnotationDescription.Builder.ofType(Column.class).build());
         }
 

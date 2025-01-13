@@ -1,4 +1,4 @@
-package com.cms.japi.classgeneration;
+package com.cms.japi.commons.dynamicclassproperties;
 
 import lombok.Data;
 import lombok.ToString;

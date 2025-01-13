@@ -1,6 +1,6 @@
 package com.cms.japi.metadata.internal.requests;
 
-import com.cms.japi.classgeneration.DynamicClassProperties;
+import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import com.cms.japi.commons.validators.ValidJsonClassMapping;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
