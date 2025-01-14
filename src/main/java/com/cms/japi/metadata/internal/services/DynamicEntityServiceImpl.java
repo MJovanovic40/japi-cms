@@ -8,18 +8,22 @@ import com.cms.japi.metadata.internal.entities.DynamicEntity;
 import com.cms.japi.metadata.internal.exceptions.DynamicEntityNotFoundException;
 import com.cms.japi.metadata.internal.repositories.DynamicEntityRepository;
 import com.github.dozermapper.core.Mapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @LogService
 public class DynamicEntityServiceImpl implements DynamicEntityService {
 
     private final DynamicEntityRepository dynamicEntityRepository;
     private final Mapper mapper;
+
+    public DynamicEntityServiceImpl(DynamicEntityRepository dynamicEntityRepository, @Qualifier("defaultMapper") Mapper mapper) {
+        this.dynamicEntityRepository = dynamicEntityRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public DynamicEntityDto createDynamicEntity(String dynamicEntityName) {

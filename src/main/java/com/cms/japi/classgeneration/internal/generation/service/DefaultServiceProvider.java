@@ -32,6 +32,8 @@ public class DefaultServiceProvider {
 
         setValues(entity, values);
 
+        repository.save(entity);
+
         return mapper.map(repository.save(entity), GeneratedDto.class);
     }
 

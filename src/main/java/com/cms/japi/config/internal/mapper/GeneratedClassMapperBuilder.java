@@ -1,10 +1,11 @@
 package com.cms.japi.config.internal.mapper;
 
 import com.cms.japi.classgeneration.internal.generation.dto.GeneratedDto;
+import com.cms.japi.classgeneration.internal.generation.model.GeneratedEntity;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
+import com.cms.japi.commons.dynamicclassproperties.DynamicClassType;
 import com.github.dozermapper.core.loader.api.BeanMappingBuilder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.aot.generate.GeneratedClass;
 
 import java.util.List;
 
@@ -15,14 +16,16 @@ public class GeneratedClassMapperBuilder extends BeanMappingBuilder {
 
     @Override
     protected void configure() {
-        dynamicClassProperties.forEach(properties ->
+        dynamicClassProperties.forEach(properties -> {
+            if(!DynamicClassType.ENTITY.equals(properties.getDynamicClassType())) return;
+
             properties.getFields().forEach(field ->
-                mapping(GeneratedClass.class, GeneratedDto.class)
+                mapping(GeneratedEntity.class, GeneratedDto.class)
                         .fields(
                                 properties.getName() + "_" + field.getName(),
                                 field.getName()
                         )
-            )
-        );
+            );
+        });
     }
 }
