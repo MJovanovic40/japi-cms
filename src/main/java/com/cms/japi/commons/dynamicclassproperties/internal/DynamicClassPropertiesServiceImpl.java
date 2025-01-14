@@ -3,7 +3,7 @@ package com.cms.japi.commons.dynamicclassproperties.internal;
 import com.cms.japi.classgeneration.internal.exceptions.JsonMapperException;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassPropertiesService;
-import com.cms.japi.metadata.DynamicEntityDto;
+import com.cms.japi.commons.dynamicclassproperties.DynamicClassType;
 import com.cms.japi.metadata.DynamicEntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +19,9 @@ public class DynamicClassPropertiesServiceImpl implements DynamicClassProperties
     private final ObjectMapper mapper;
     private final DynamicEntityService dynamicEntityService;
 
+
     @Override
-    public List<DynamicClassProperties> getAllClassProperties() {
+    public List<DynamicClassProperties> getClassPropertiesForAllEntities() {
         return dynamicEntityService.getAll().stream()
                 .map(entity -> parseDynamicClassProperties(entity.getData()))
                 .toList();
@@ -28,7 +29,9 @@ public class DynamicClassPropertiesServiceImpl implements DynamicClassProperties
 
     private DynamicClassProperties parseDynamicClassProperties(String jsonString) {
         try {
-            return mapper.readValue(jsonString, DynamicClassProperties.class);
+            DynamicClassProperties properties = mapper.readValue(jsonString, DynamicClassProperties.class);
+            properties.setDynamicClassType(DynamicClassType.ENTITY);
+            return properties;
         } catch (JsonProcessingException e) {
             throw new JsonMapperException(e.getMessage());
         }

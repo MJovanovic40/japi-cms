@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface DynamicClassPropertiesService {
 
-    List<DynamicClassProperties> getAllClassProperties();
+    List<DynamicClassProperties> getClassPropertiesForAllEntities();
 }
