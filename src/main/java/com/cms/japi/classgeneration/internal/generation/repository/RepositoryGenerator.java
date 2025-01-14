@@ -17,7 +17,7 @@ public class RepositoryGenerator implements ClassGenerator {
                 .makeInterface()
                 .name(dynamicClassProperties.getName())
                 .annotateType(AnnotationDescription.Builder.ofType(Repository.class).build())
-                .defineMethod("deleteById", Void.class, Visibility.PUBLIC)
+                .defineMethod("deleteById", void.class, Visibility.PUBLIC)
                 .withParameters(Long.class)
                 .withoutCode()
                 .make()

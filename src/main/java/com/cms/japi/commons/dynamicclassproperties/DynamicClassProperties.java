@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 @ToString
@@ -18,7 +15,7 @@ public class DynamicClassProperties {
 
     private final List<DynamicClassField> fields = new ArrayList<>();
 
-    private final Map<DynamicClassType, Class<?>> dependencies = new HashMap<>();
+    private final Map<DynamicClassType, Object> dependencies = new EnumMap<>(DynamicClassType.class);
 
     private DynamicClassType dynamicClassType;
 }

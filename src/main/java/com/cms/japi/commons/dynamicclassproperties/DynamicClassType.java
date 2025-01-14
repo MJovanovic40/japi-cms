@@ -7,5 +7,6 @@ public enum DynamicClassType {
     EXCEPTION_HANDLER,
     DTO,
     REQUEST,
-    ENTITY
+    ENTITY,
+    MAPPER
 }

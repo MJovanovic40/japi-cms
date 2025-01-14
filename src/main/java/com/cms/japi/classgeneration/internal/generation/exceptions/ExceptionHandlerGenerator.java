@@ -22,7 +22,7 @@ public class ExceptionHandlerGenerator implements ClassGenerator {
                 .annotateType(AnnotationDescription.Builder.ofType(ControllerAdvice.class).build())
                 .defineMethod("handleDynamicException", ResponseEntity.class, Visibility.PUBLIC)
                 .withParameters(DynamicException.class)
-                .intercept(MethodDelegation.to(new DefaultExceptionHandlerProvider()))
+                .intercept(MethodDelegation.to(DefaultExceptionHandlerProvider.class))
                 .annotateType(
                         AnnotationDescription.Builder.ofType(ExceptionHandler.class)
                                 .define("value", DynamicException.class)
