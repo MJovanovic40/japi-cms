@@ -3,6 +3,7 @@ package com.cms.japi.classgeneration.internal.generation.exceptions;
 import com.cms.japi.JapiApplication;
 import com.cms.japi.classgeneration.internal.generation.ClassGenerator;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
+import lombok.RequiredArgsConstructor;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
 import net.bytebuddy.description.modifier.Visibility;
@@ -12,10 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@RequiredArgsConstructor
 public class ExceptionHandlerGenerator implements ClassGenerator {
 
+    private final DynamicClassProperties dynamicClassProperties;
+
     @Override
-    public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
+    public Class<?> generate() {
         return new ByteBuddy()
                 .subclass(Object.class)
                 .name(dynamicClassProperties.getName())

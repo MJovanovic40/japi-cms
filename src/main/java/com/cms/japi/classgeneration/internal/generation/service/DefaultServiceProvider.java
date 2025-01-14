@@ -2,7 +2,7 @@ package com.cms.japi.classgeneration.internal.generation.service;
 
 import com.cms.japi.classgeneration.internal.generation.dto.GeneratedDto;
 import com.cms.japi.classgeneration.internal.generation.exceptions.DynamicException;
-import com.cms.japi.classgeneration.internal.generation.model.GeneratedEntity;
+import com.cms.japi.classgeneration.internal.generation.entity.GeneratedEntity;
 import com.github.dozermapper.core.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.cms.japi.classgeneration.internal.generation.model;
+package com.cms.japi.classgeneration.internal.generation.entity;
 
 import com.cms.japi.JapiApplication;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassField;
@@ -15,10 +15,12 @@ import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 
 @RequiredArgsConstructor
-public class ModelGenerator implements ClassGenerator {
+public class EntityGenerator implements ClassGenerator {
+
+    private final DynamicClassProperties dynamicClassProperties;
 
     @Override
-    public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
+    public Class<?> generate() {
         var builder = new ByteBuddy().subclass(GeneratedEntity.class)
                 .annotateType(AnnotationDescription.Builder.ofType(Entity.class).build());
 

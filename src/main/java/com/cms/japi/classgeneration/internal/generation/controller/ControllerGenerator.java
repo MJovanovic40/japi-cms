@@ -18,8 +18,10 @@ import static com.cms.japi.classgeneration.internal.utils.ClassGenerationUtils.c
 @RequiredArgsConstructor
 public class ControllerGenerator implements ClassGenerator {
 
+    private final DynamicClassProperties dynamicClassProperties;
+
     @Override
-    public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
+    public Class<?> generate() {
         return new ByteBuddy()
                 .subclass(GeneratedController.class)
                 .name(dynamicClassProperties.getName() + "Controller")

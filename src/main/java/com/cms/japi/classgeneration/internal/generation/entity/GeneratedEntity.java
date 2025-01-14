@@ -1,4 +1,4 @@
-package com.cms.japi.classgeneration.internal.generation.model;
+package com.cms.japi.classgeneration.internal.generation.entity;
 
 import com.cms.japi.classgeneration.internal.exceptions.ReflectionFieldException;
 

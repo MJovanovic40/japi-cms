@@ -17,5 +17,5 @@ public class DynamicClassProperties {
 
     private final Map<DynamicClassType, Object> dependencies = new EnumMap<>(DynamicClassType.class);
 
-    private DynamicClassType dynamicClassType;
+    private DynamicClassType type;
 }

@@ -7,15 +7,20 @@ import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 
+
+@RequiredArgsConstructor
 public class DtoGenerator implements ClassGenerator {
 
+    private final DynamicClassProperties dynamicClassProperties;
+
     @Override
-    public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
+    public Class<?> generate() {
         var builder = new ByteBuddy().subclass(GeneratedDto.class)
                 .annotateType(AnnotationDescription.Builder.ofType(Data.class).build())
                 .annotateType(AnnotationDescription.Builder.ofType(NoArgsConstructor.class).build());

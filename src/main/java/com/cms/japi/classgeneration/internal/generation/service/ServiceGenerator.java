@@ -3,11 +3,12 @@ package com.cms.japi.classgeneration.internal.generation.service;
 import com.cms.japi.JapiApplication;
 import com.cms.japi.classgeneration.internal.generation.ClassGenerator;
 import com.cms.japi.classgeneration.internal.generation.dto.GeneratedDto;
-import com.cms.japi.classgeneration.internal.generation.model.GeneratedEntity;
+import com.cms.japi.classgeneration.internal.generation.entity.GeneratedEntity;
 import com.cms.japi.classgeneration.internal.utils.ClassGenerationUtils;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassType;
 import com.github.dozermapper.core.Mapper;
+import lombok.RequiredArgsConstructor;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -16,10 +17,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ServiceGenerator implements ClassGenerator {
 
+    private final DynamicClassProperties dynamicClassProperties;
+
     @Override
-    public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
+    public Class<?> generate() {
 
         Object repoObject = dynamicClassProperties.getDependencies().get(DynamicClassType.REPOSITORY);
         Object mapperObject = dynamicClassProperties.getDependencies().get(DynamicClassType.MAPPER);
