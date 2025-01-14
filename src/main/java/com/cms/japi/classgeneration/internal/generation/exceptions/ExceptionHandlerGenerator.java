@@ -6,7 +6,6 @@ import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
 import net.bytebuddy.description.modifier.Visibility;
-import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
 import org.springframework.http.ResponseEntity;
@@ -17,20 +16,20 @@ public class ExceptionHandlerGenerator implements ClassGenerator {
 
     @Override
     public Class<?> generate(DynamicClassProperties dynamicClassProperties) {
-        var builder = new ByteBuddy().subclass(Object.class)
-                .annotateType(AnnotationDescription.Builder.ofType(ControllerAdvice.class).build());
-
-        builder.defineMethod("handleDynamicException", ResponseEntity.class, Visibility.PUBLIC)
+        return new ByteBuddy()
+                .subclass(Object.class)
+                .name(dynamicClassProperties.getName())
+                .annotateType(AnnotationDescription.Builder.ofType(ControllerAdvice.class).build())
+                .defineMethod("handleDynamicException", ResponseEntity.class, Visibility.PUBLIC)
                 .withParameters(DynamicException.class)
                 .intercept(MethodDelegation.to(new DefaultExceptionHandlerProvider()))
                 .annotateType(
                         AnnotationDescription.Builder.ofType(ExceptionHandler.class)
                                 .define("value", DynamicException.class)
                                 .build()
-                );
-
-        DynamicType.Unloaded<?> generatedClass = builder.name(dynamicClassProperties.getName()).make();
-        return generatedClass.load(JapiApplication.class.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
+                )
+                .make()
+                .load(JapiApplication.class.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
                 .getLoaded();
     }
 }
