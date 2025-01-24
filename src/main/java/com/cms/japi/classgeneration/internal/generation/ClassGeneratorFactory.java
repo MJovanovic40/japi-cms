@@ -10,7 +10,7 @@ import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class GeneratorFactory {
+public class ClassGeneratorFactory {
 
     public ClassGenerator getClassGenerator(DynamicClassProperties properties) {
         switch (properties.getType()) {

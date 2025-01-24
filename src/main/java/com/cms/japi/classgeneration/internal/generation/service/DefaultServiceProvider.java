@@ -12,12 +12,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class DefaultServiceProvider {
+public class DefaultServiceProvider implements GeneratedService {
 
     private final JpaRepository<GeneratedEntity, Long> repository;
     private final Mapper mapper;
     private final Class<? extends GeneratedEntity> entityClass;
 
+    @Override
     public GeneratedDto create(Object... values) {
         Field[] fields = entityClass.getDeclaredFields();
 
@@ -37,6 +38,7 @@ public class DefaultServiceProvider {
         return mapper.map(repository.save(entity), GeneratedDto.class);
     }
 
+    @Override
     public List<GeneratedDto> getAll() {
         return repository.findAll()
                 .stream()
@@ -44,11 +46,13 @@ public class DefaultServiceProvider {
                 .toList();
     }
 
+    @Override
     public GeneratedDto get(Long id) {
         return mapper.map(repository.findById(id)
                 .orElseThrow(() -> new DynamicException("Entity not found by id.")), GeneratedDto.class);
     }
 
+    @Override
     public void update(Object... values) {
         Field[] fields = entityClass.getDeclaredFields();
 
@@ -61,6 +65,7 @@ public class DefaultServiceProvider {
         repository.save(entity);
     }
 
+    @Override
     public void delete(Long dynamicEntityId) {
         repository.deleteById(dynamicEntityId);
     }

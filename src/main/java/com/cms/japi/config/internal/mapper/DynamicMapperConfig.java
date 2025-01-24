@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class DynamicMapperConfig {
 
-    protected final DynamicClassPropertiesService dynamicClassPropertiesService;
-
-    @Bean("dynamicMapper")
-    public Mapper mapper() {
-        return DozerBeanMapperBuilder.create()
-                .withMappingBuilder(new GeneratedClassMapperBuilder(dynamicClassPropertiesService.getClassPropertiesForAllEntities()))
-                .build();
-    }
+//    protected final DynamicClassPropertiesService dynamicClassPropertiesService;
+//
+//    @Bean("dynamicMapper")
+//    public Mapper mapper() {
+//        return DozerBeanMapperBuilder.create()
+//                .withMappingBuilder(new GeneratedClassMapperBuilder(dynamicClassPropertiesService.getClassPropertiesForAllEntities()))
+//                .build();
+//    }
 }

@@ -21,6 +21,7 @@ public class EntityGenerator implements ClassGenerator {
 
     @Override
     public Class<?> generate() {
+        System.out.println(dynamicClassProperties);
         var builder = new ByteBuddy().subclass(GeneratedEntity.class)
                 .annotateType(AnnotationDescription.Builder.ofType(Entity.class).build());
 

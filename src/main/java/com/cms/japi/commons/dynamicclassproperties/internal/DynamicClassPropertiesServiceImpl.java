@@ -30,7 +30,7 @@ public class DynamicClassPropertiesServiceImpl implements DynamicClassProperties
     private DynamicClassProperties parseDynamicClassProperties(String jsonString) {
         try {
             DynamicClassProperties properties = mapper.readValue(jsonString, DynamicClassProperties.class);
-            properties.setDynamicClassType(DynamicClassType.ENTITY);
+            properties.setType(DynamicClassType.ENTITY);
             return properties;
         } catch (JsonProcessingException e) {
             throw new JsonMapperException(e.getMessage());
