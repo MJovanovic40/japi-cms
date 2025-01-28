@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.Query;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import static org.jooq.impl.DSL.alterTable;
@@ -17,19 +18,23 @@ public class MigrationBuilder {
 
     private static final String INFORMATION_SCHEMA_TABLES = "information_schema.tables";
     private static final String INFORMATION_SCHEMA_COLUMNS = "information_schema.columns";
+    private static final String SCRIPT_GENERATED_EVENT = "Script Generated";
     private final DSLContext dslContext;
     private final SqlScriptGenerator sqlScriptGenerator;
+    private final ApplicationEventPublisher event;
 
     @Value("${spring.datasource.name}")
     private String databaseName;
 
     @LogService
-    public String dropColumn(String table, String column) throws Exception {
+    public void dropColumn(String table, String column) throws Exception {
         if (!checkIfTableExists(table)) throw new TableDoesNotExistsException(table);
         if (!checkIfColumnExists(column, table)) throw new ColumnDoesNotExistsException(column);
         Query query = alterTable(table).dropColumn(column);
+
         sqlScriptGenerator.generateSqlScript(query.getSQL(), "drop_column");
-        return query.getSQL();
+
+        event.publishEvent(SCRIPT_GENERATED_EVENT);
     }
 
     private boolean checkIfTableExists(String table) {

@@ -14,6 +14,7 @@ public class Controller {
 
     @GetMapping("/test")
     public String test() throws Exception {
-        return migrationBuilder.dropColumn("users", "age");
+        migrationBuilder.dropColumn("users", "age");
+        return "Uspesno";
     }
 }

@@ -3,6 +3,7 @@ package com.cms.japi.generation.internal.migrations;
 import com.cms.japi.logging.LogService;
 import org.springframework.stereotype.Component;
 
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.regex.Matcher;
@@ -64,7 +65,7 @@ public class SqlScriptGenerator {
      *
      * @return Path The resolved path to the `db/migration` directory.
      * @throws IllegalStateException if the directory does not exist.
-     * @throws Exception for any unexpected errors while resolving the path.
+     * @throws Exception             for any unexpected errors while resolving the path.
      */
     private Path resolveMigrationClasspath() throws Exception {
         try {
