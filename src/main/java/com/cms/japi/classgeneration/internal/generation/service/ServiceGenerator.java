@@ -40,6 +40,7 @@ public class ServiceGenerator implements ClassGenerator {
         return new ByteBuddy()
                 .subclass(Object.class)
                 .annotateType(ClassGenerationUtils.createAnnotation(Service.class, ""))
+                .implement(GeneratedService.class)
 
                 .defineMethod("create", GeneratedDto.class, Visibility.PUBLIC)
                 .withParameters(Object[].class)

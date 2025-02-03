@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DefaultMapperConfig {
 
-    @Bean("defaultMapper")
+    @Bean
     public Mapper getMapper() {
         return DozerBeanMapperBuilder.buildDefault();
     }

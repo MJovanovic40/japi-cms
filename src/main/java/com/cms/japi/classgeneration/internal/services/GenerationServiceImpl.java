@@ -5,14 +5,15 @@ import com.cms.japi.classgeneration.internal.generation.ClassGeneratorFactory;
 import com.cms.japi.classgeneration.internal.generation.entity.GeneratedEntity;
 import com.cms.japi.classgeneration.internal.generation.service.GeneratedService;
 import com.cms.japi.classgeneration.internal.injection.BeanInjector;
+import com.cms.japi.classgeneration.internal.injection.DynamicRepositoryInitializer;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassProperties;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassPropertiesService;
 import com.cms.japi.commons.dynamicclassproperties.DynamicClassType;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,37 +22,49 @@ public class GenerationServiceImpl implements GenerationService {
 
     private final DynamicClassPropertiesService dynamicClassPropertiesService;
     private final BeanInjector beanInjector;
+    private final DynamicRepositoryInitializer dynamicRepositoryInitializer;
 
-    @PostConstruct
-    public void init() {
-        generateDynamicClasses();
+    @Override
+    public List<Class<?>> generateEntities() {
+        List<DynamicClassProperties> entitiesProperties = dynamicClassPropertiesService.getClassPropertiesForAllEntities();
+
+        List<Class<?>> generatedEntities = new ArrayList<>();
+        entitiesProperties.forEach(properties -> {
+            Class<?> generatedEntity = generateClass(properties);
+            generatedEntities.add(generatedEntity);
+        });
+        return generatedEntities;
     }
 
     @Override
-    public List<Class<?>> generateDynamicClasses() {
-        // Get all entities
-        // Generate Entity
-        // Generate all Class Properties
-        // Sort all class properties for the creation order
-        // Generate classes
+    public void generateSupportingClasses(List<Class<?>> entities) {
 
         List<DynamicClassProperties> entitiesProperties = dynamicClassPropertiesService.getClassPropertiesForAllEntities();
 
         entitiesProperties.forEach(properties -> {
-            Class<?> generatedEntity = generateClass(properties);
-
-            DynamicClassProperties repositoryProperties = generateRepositoryProperties(properties);
-            Class<?> generatedRepository = generateClass(repositoryProperties);
-
-//            System.out.println(beanInjector.injectBean(generatedRepository).getClass().getName());
-
             DynamicClassProperties exceptionHandlerProperties = generateExceptionHandlerProperties(properties);
+//            Class<?> generatedExceptionHandler = generateClass(exceptionHandlerProperties);
+
             DynamicClassProperties dtoProperties = generateDtoProperties(properties);
+            Class<?> generatedDto = generateClass(dtoProperties);
+
+            DynamicClassProperties repositoryProperties = generateRepositoryProperties(properties, entities.get(entitiesProperties.indexOf(properties)));
+            Class<? extends JpaRepository<? extends GeneratedEntity, Long>> generatedRepository = (Class<? extends JpaRepository<? extends GeneratedEntity, Long>>) generateClass(repositoryProperties);
+            JpaRepository repository = dynamicRepositoryInitializer.initializeRepository(generatedRepository);
+
+            DynamicClassProperties serviceProperties = generateServiceProperties(properties, repository, entities.get(entitiesProperties.indexOf(properties)));
+            Class<?> generatedService = generateClass(serviceProperties);
+            beanInjector.injectBean(generatedService);
+
+            GeneratedService service = (GeneratedService) beanInjector.getBean(generatedService);
+
+            DynamicClassProperties controllerProperties = generateControllerProperties(properties, service);
+            Class<?> generatedController = generateClass(controllerProperties);
+
+            beanInjector.injectBean(generatedController);
         });
-
-
-        return List.of();
     }
+
 
     private Class<?> generateClass(DynamicClassProperties properties) {
         return ClassGeneratorFactory.getClassGenerator(properties).generate();
@@ -72,10 +85,12 @@ public class GenerationServiceImpl implements GenerationService {
         return properties;
     }
 
-    private DynamicClassProperties generateRepositoryProperties(DynamicClassProperties baseProperties) {
+    private DynamicClassProperties generateRepositoryProperties(DynamicClassProperties baseProperties, Class<?> entity) {
         DynamicClassProperties properties = new DynamicClassProperties();
         properties.setName(baseProperties.getName() + "Repository");
         properties.setType(DynamicClassType.REPOSITORY);
+        properties.getDependencies().put(DynamicClassType.ENTITY, entity);
+
         return properties;
     }
 
