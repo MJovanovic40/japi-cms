@@ -1,23 +1,21 @@
 package com.cms.japi.metadata.internal.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.apache.commons.lang3.builder.EqualsExclude;
+
+import java.io.Serializable;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table (name = "dynamic_entities")
-public class DynamicEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@EqualsAndHashCode
+public class DynamicEntity implements Serializable {
     private Integer id;
 
+    @EqualsExclude
     private String name;
 
+    @EqualsExclude
     private String data;
 }

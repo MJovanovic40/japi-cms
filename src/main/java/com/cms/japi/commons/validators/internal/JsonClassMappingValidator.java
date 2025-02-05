@@ -8,18 +8,19 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class JsonClassMappingValidator implements ConstraintValidator<ValidJsonClassMapping, String> {
 
     private Class<?> targetClass;
+    private String[] ignoredFields;
     private final ObjectMapper objectMapper;
 
     @Override
     public void initialize(ValidJsonClassMapping constraintAnnotation) {
         this.targetClass = constraintAnnotation.targetClass();
+        this.ignoredFields = constraintAnnotation.ignoreFields();
     }
 
     @Override
@@ -45,8 +46,10 @@ public class JsonClassMappingValidator implements ConstraintValidator<ValidJsonC
     }
 
     private Set<String> getFieldNames(Class<?> clazz) {
+        List<String> ignoredFieldsList = Arrays.asList(this.ignoredFields);
         Set<String> fieldNames = new HashSet<>();
         for (Field field : clazz.getDeclaredFields()) {
+            if(ignoredFieldsList.contains(field.getName())) continue;
             fieldNames.add(field.getName());
         }
         return fieldNames;

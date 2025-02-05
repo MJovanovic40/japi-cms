@@ -1,23 +1,16 @@
 package com.cms.japi.metadata.internal.repositories;
 
 import com.cms.japi.metadata.internal.entities.DynamicEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface DynamicEntityRepository extends JpaRepository<DynamicEntity, Integer> {
+import java.util.List;
+import java.util.Optional;
 
-    @Transactional
-    @Modifying
-    @Query("update DynamicEntity d set d.name = ?2, d.data = ?3 where d.id = ?1")
+public interface DynamicEntityRepository {
+
+    DynamicEntity save(DynamicEntity entity);
+    List<DynamicEntity> findAll();
+    Optional<DynamicEntity> findById(Integer id);
     int updateDynamicEntityById(Integer id, String name, String data);
-
-    @Transactional
-    @Modifying
-    @Query("delete from DynamicEntity d where d.id = ?1")
     int deleteDynamicEntityById(Integer id);
 
 }

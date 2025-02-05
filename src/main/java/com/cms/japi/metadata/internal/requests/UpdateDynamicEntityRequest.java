@@ -19,6 +19,6 @@ public class UpdateDynamicEntityRequest {
 
     @NotNull
     @NotEmpty
-    @ValidJsonClassMapping(targetClass = DynamicClassProperties.class)
+    @ValidJsonClassMapping(targetClass = DynamicClassProperties.class, ignoreFields = {"type", "dependencies"})
     private final String data;
 }
