@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DynamicRepositoryInitializer {
 
-    private final EntityManager entityManager;
-
-     public JpaRepository initializeRepository(Class<? extends JpaRepository<?, Long>> repository) {
-         RepositoryFactorySupport factory = new JpaRepositoryFactory(entityManager);
-         JpaRepository<?, Long> repositoryInstance = factory.getRepository(repository);
-         return repositoryInstance;
-     }
+//    private final EntityManager entityManager;
+//
+//     public JpaRepository initializeRepository(Class<? extends JpaRepository<?, Long>> repository) {
+//         RepositoryFactorySupport factory = new JpaRepositoryFactory(entityManager);
+//         JpaRepository<?, Long> repositoryInstance = factory.getRepository(repository);
+//         return repositoryInstance;
+//     }
 }
