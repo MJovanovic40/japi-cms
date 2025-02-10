@@ -3,7 +3,6 @@ package com.cms.japi.generation.internal.migrations;
 import com.cms.japi.logging.LogService;
 import org.springframework.stereotype.Component;
 
-import java.io.FileOutputStream;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.regex.Matcher;

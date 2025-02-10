@@ -1,35 +1,34 @@
 package com.cms.japi.system.internal;
 
-import com.cms.japi.JapiApplication;
 import com.cms.japi.generation.events.ScriptGeneratedEvent;
 import com.cms.japi.logging.LogService;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.SpringApplication;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-@Component
-public class SystemManagement {
-    private ConfigurableApplicationContext context;
+import java.io.File;
+import java.util.Arrays;
 
-    public SystemManagement(ConfigurableApplicationContext context) {
-        this.context = context;
+@Component
+@RequiredArgsConstructor
+public class SystemManagement {
+    private final ConfigurableApplicationContext configurableApplicationContext;
+
+    @PostConstruct
+    public void post() {
+        File file = new File("D:\\Projects\\japi-cms\\src\\main\\resources\\db.migration");
+        System.out.println("reading files");
+        Arrays.stream(file.listFiles()).forEach(f -> System.out.println(f.toURI()));
     }
 
     @LogService
     @Async
     @EventListener
     public void restart(ScriptGeneratedEvent event) {
-        ApplicationArguments args = context.getBean(ApplicationArguments.class);
-
-        Thread thread = new Thread(() -> {
-            context.close();
-            context = SpringApplication.run(JapiApplication.class, args.getSourceArgs());
-        });
-
-        thread.setDaemon(false);
-        thread.start();
+        configurableApplicationContext.close();
+        System.exit(0);
     }
 }
